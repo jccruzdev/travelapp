@@ -1,0 +1,13 @@
+{{#if errorMsg}}
+<ul class="unordered-list mb-4">
+  <li style="color: red;">{{errorMsg}}</li>
+</ul>
+{{/if}}
+
+{{#if validationErrors}}
+<ul class="unordered-list mb-4">
+  {{#each validationErrors}}
+  <li style="color: red;">{{this.msg}}</li>
+  {{/each}}
+</ul>
+{{/if}}
