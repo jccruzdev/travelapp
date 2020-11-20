@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="section_title text-center">
+        <h3>Reserva Ahora Mismo!</h3>
+      </div>
+
+      <form>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="form-group">
+              <label for="date">Elige una fecha:</label>
+              <input class="form-control valid" name="date" id="date" type="date" placeholder="Fecha" />
+            </div>
+          </div>
+
+          <div class="col-sm-4" style="display: flex">
+            <span style="margin: auto" class="badge badge-success p-3">Ocupación: 50%</span>
+          </div>
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="peopleNumber">Número de personas</label>
+              <input class="form-control valid" name="peopleNumber" s id="peopleNumber" type="number" min="1"
+                placeholder="¿Cuantas personas?" />
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label for="q1">¿Alguien ha sido infectado con COVID-19?</label> &nbsp;
+            <input type="checkbox" name="q1" id="q1" />
+          </div>
+
+          <div class="col-sm-12">
+            <label for="q2">¿Recientemente ha estado con alguien infectado con COVID-19?</label>
+            &nbsp;
+            <input type="checkbox" name="q2" id="q2" />
+          </div>
+
+          <div class="col-sm-12 mt-10">
+            <label for="q4">Si respondió SI a alguna de las preguntas ingrese el nombre de la(s) persona(s)
+              que presentaron esta experiencia y viajarán con usted por favor:</label>
+            <textarea name="q4" class="single-textarea" id="q4"
+              placeholder="Esta información es por la seguridad de todos expliquenos por favor..."></textarea>
+          </div>
+
+          <div class="col-sm-12" style="margin-top: 20px">
+            <button type="submit" class="button button-contactForm boxed-btn">
+              Realizar Reserva
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

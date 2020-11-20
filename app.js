@@ -8,12 +8,11 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const helmet = require('helmet');
+const compression = require('compression');
 
-// const adminRoutes = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
-// const providerRoutes = require('./routes/provider');
-// const saleRoutes = require('./routes/sale');
 
 const app = express();
 
@@ -89,10 +88,10 @@ app.use((req, res, next) => {
 //[router] middlewares
 app.use(authRoutes);
 app.use(userRoutes);
+app.use(adminRoutes);
 
-// app.use(adminRoutes);
-// app.use(providerRoutes);
-// app.use(saleRoutes);
+//[Compression: Compress Assets]
+app.use(compression());
 
 //[Helmet:Secure Headers]
 app.use(helmet());

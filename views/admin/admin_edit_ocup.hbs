@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="section_title text-center">
+        <h3>Editar Ocupación</h3>
+      </div>
+
+      <form class="form-contact contact_form" id="contactForm">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="date">Elige una fecha:</label>
+              <input class="form-control valid" name="date" id="date" type="date" placeholder="Fecha" />
+            </div>
+          </div>
+
+          <div class="col-sm-12 input-group-icon mt-10">
+            <label for="jornada">Jornada</label>
+
+            <div class="form-select" id="default-select">
+              <select id="jornada" name="jornada">
+                <option value="manana">Mañana</option>
+                <option value="tarde">Tarde</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="edit_ocup">Ocupación</label>
+              <input class="form-control valid" name="edit_ocup" id="edit_ocup" type="number" min="1"
+                placeholder="Ocupación para la fecha seleecionada" />
+            </div>
+          </div>
+
+        </div>
+        <div class="form-group mt-3">
+          <button type="submit" class="button button-contactForm boxed-btn">
+            Confirmar edición
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

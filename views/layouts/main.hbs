@@ -4,25 +4,24 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <title>Travelo</title>
+  <title>TravelApp</title>
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png" />
   <!-- CSS here -->
-  <link rel="stylesheet" href="css/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/owl.carousel.min.css" />
-  <link rel="stylesheet" href="css/magnific-popup.css" />
-  <link rel="stylesheet" href="css/font-awesome.min.css" />
-  <link rel="stylesheet" href="css/themify-icons.css" />
-  <link rel="stylesheet" href="css/nice-select.css" />
-  <link rel="stylesheet" href="css/flaticon.css" />
-  <link rel="stylesheet" href="css/gijgo.css" />
-  <link rel="stylesheet" href="css/animate.css" />
-  <link rel="stylesheet" href="css/slick.css" />
-  <link rel="stylesheet" href="css/slicknav.css" />
+  <link rel="stylesheet" href="/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/owl.carousel.min.css" />
+  <link rel="stylesheet" href="/css/magnific-popup.css" />
+  <link rel="stylesheet" href="/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/themify-icons.css" />
+  <link rel="stylesheet" href="/css/nice-select.css" />
+  <link rel="stylesheet" href="/css/flaticon.css" />
+  <link rel="stylesheet" href="/css/gijgo.css" />
+  <link rel="stylesheet" href="/css/animate.css" />
+  <link rel="stylesheet" href="/css/slick.css" />
+  <link rel="stylesheet" href="/css/slicknav.css" />
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -36,7 +35,7 @@
               <div class="col-xl-2 col-lg-2">
                 <div class="logo">
                   <a href="/">
-                    <img src="./img/Travelapp-ft1.png" width="90" />
+                    <img src="/img/Travelapp-ft1.png" width="90" />
                   </a>
                 </div>
               </div>
@@ -50,30 +49,23 @@
                       {{#switch userRole}}
                       {{#case 'tourist'}}
                       <li><a class="active" href="/">Inicio</a></li>
-                      <li><a class="" href="travel_destination.html">Reservar</a></li>
+                      <li><a class="" href="/destinos">Destinos</a></li>
                       <li><a href="about.html">Usuario Turista</a></li>
                       {{/case}}
                       {{#case 'admin'}}
-                      <li><a class="active" href="/">Inicio</a></li>
-                      <li><a class="" href="travel_destination.html">Reservar</a></li>
-                      <li><a href="about.html">Usuario Admin</a></li>
+                      <li><a class="active" href="/admin">Inicio</a></li>
                       {{/case}}
                       {{#case 'superAdmin'}}
                       <li><a class="active" href="/">Inicio</a></li>
-                      <li><a class="" href="travel_destination.html">Reservar</a></li>
-                      <li><a href="about.html">Usuario superAdmin</a></li>
                       {{/case}}
                       {{#case 'operator'}}
                       <li><a class="active" href="/">Inicio</a></li>
-                      <li><a class="" href="travel_destination.html">Reservar</a></li>
-                      <li><a href="about.html">Usuario Operador</a></li>
                       {{/case}}
                       {{/switch}}
                       {{else}}
                       <li><a class="active" href="/">Inicio</a></li>
-                      <li><a class="" href="travel_destination.html">Destinos</a></li>
-                      <li><a href="about.html">Nosotros</a></li>
-                      <li><a href="contact.html">Contáctenos</a></li>
+                      <li><a class="" href="/destinos">Destinos</a></li>
+                      <li><a href="/about">Nosotros</a></li>
                       {{/if}}
 
                     </ul>
@@ -83,7 +75,7 @@
               <div class="col-xl-4 col-lg-4 d-none d-lg-block">
                 <div class="social_wrap d-flex align-items-center justify-content-end">
                   <div class="number">
-                    <p><i class="fa fa-phone"></i> 10(256)-928 256</p>
+                    <p><i class="fa fa-phone"></i>(+57) 3137432244</p>
                   </div>
                   <div class="social_links d-none d-xl-block">
                     <ul>
