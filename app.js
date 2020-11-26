@@ -13,6 +13,7 @@ const compression = require('compression');
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const sAdminRoutes = require('./routes/sAdmin');
 
 const app = express();
 
@@ -89,6 +90,7 @@ app.use((req, res, next) => {
 app.use(authRoutes);
 app.use(userRoutes);
 app.use(adminRoutes);
+app.use(sAdminRoutes);
 
 //[Compression: Compress Assets]
 app.use(compression());

@@ -49,14 +49,15 @@
                       {{#switch userRole}}
                       {{#case 'tourist'}}
                       <li><a class="active" href="/">Inicio</a></li>
-                      <li><a class="" href="/destinos">Destinos</a></li>
-                      <li><a href="about.html">Usuario Turista</a></li>
+                      <li><a href="/reservas">Mis Reservas</a></li>
+                      <li><a href="/destinos">Destinos</a></li>
+                      <li><a href="/about">Nosotros</a></li>
                       {{/case}}
                       {{#case 'admin'}}
                       <li><a class="active" href="/admin">Inicio</a></li>
                       {{/case}}
                       {{#case 'superAdmin'}}
-                      <li><a class="active" href="/">Inicio</a></li>
+                      <li><a class="active" href="/sAdmin">Inicio</a></li>
                       {{/case}}
                       {{#case 'operator'}}
                       <li><a class="active" href="/">Inicio</a></li>
@@ -64,10 +65,9 @@
                       {{/switch}}
                       {{else}}
                       <li><a class="active" href="/">Inicio</a></li>
-                      <li><a class="" href="/destinos">Destinos</a></li>
+                      <li><a href="/destinos">Destinos</a></li>
                       <li><a href="/about">Nosotros</a></li>
                       {{/if}}
-
                     </ul>
                   </nav>
                 </div>
