@@ -2,62 +2,83 @@
   <div class="row justify-content-center">
     <div class="col-lg-6">
       <div class="section_title text-center">
-        <h3>Editar actividades</h3>
+        {{#if newPlace}}
+        <h3>Ahora, completa la información</h3>
+        {{else}}
+        <h3>Editar Lugar</h3>
+        {{/if}}
       </div>
 
-      <form class="form-contact contact_form" id="contactForm">
+      <form action="{{#if newPlace}}/admin/nuevaActividad{{else}}/admin/actividad{{/if}}" method="POST">
         <div class="row">
           <div class="col-sm-12">
             <div class="form-group">
-              <label for="date">Elige una fecha:</label>
-              <input class="form-control valid" name="date" id="date" type="date" placeholder="Fecha" />
+              <h5 for="nombre">Tiulo Del Lugar</h5>
+              <input type="text" class="form-control valid" id="nombre" name="nombre" value="{{nombre}}"
+                placeholder="Ingresa un nombre llamativo..." required>
             </div>
           </div>
-
-          <div class="col-sm-12 input-group-icon mt-10">
-            <label for="jornada">Jornada</label>
-
-            <div class="form-select" id="default-select">
-              <select id="jornada" name="jornada">
-                <option value="manana">Mañana</option>
-                <option value="tarde">Tarde</option>
-              </select>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <h5>Elige los dias disponibles para reservar</h5>
+              <label for="lunes">Lunes</label>
+              <input type="checkbox" name="lunes" id="lunes" {{compareDay diasTrabajo 1}} />
+              <label for="martes">Martes</label>
+              <input type="checkbox" name="martes" id="martes" {{compareDay diasTrabajo 2}} />
+              <label for="miercoles">Miercoles</label>
+              <input type="checkbox" name="miercoles" id="miercoles" {{compareDay diasTrabajo 3}} />
+              <label for="jueves">Jueves</label>
+              <input type="checkbox" name="jueves" id="jueves" {{compareDay diasTrabajo 4}} />
+              <label for="viernes">Viernes</label>
+              <input type="checkbox" name="viernes" id="viernes" {{compareDay diasTrabajo 5}} />
+              <label for="sabado">Sabado</label>
+              <input type="checkbox" name="sabado" id="sabado" {{compareDay diasTrabajo 6}} />
+              <label for="domingo">Domingo</label>
+              <input type="checkbox" name="domingo" id="domingo" {{compareDay diasTrabajo 0}} />
             </div>
           </div>
 
           <div class="col-sm-12">
+            <h5>Horario Mañana</h4>
+          </div>
+          <div class="col-sm-6">
             <div class="form-group">
-              <label for="Actividad1">Actividad 1</label>
-              <input class="form-control valid" name="Actividad1" id="Actividad1" type="text"
-                placeholder="Describe la actividad 1" />
+              <input class="form-control valid" name="morning1" id="date" type="time" max="23:00"
+                value="{{morning.[0]}}" required />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input class="form-control valid" name="morning2" id="date" type="time" value="{{morning.[1]}}"
+                required />
             </div>
           </div>
 
           <div class="col-sm-12">
+            <h5>Horario Tarde</h4>
+          </div>
+          <div class="col-sm-6">
             <div class="form-group">
-              <label for="Actividad2">Actividad 2 </label>
-              <input class="form-control valid" name="Actividad2" id="Actividad2" type="text"
-                placeholder="Describe la actividad 2" />
+              <input class="form-control valid" name="evening1" id="date" type="time" value="{{evening.[0]}}"
+                required />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input class="form-control valid" name="evening2" id="date" type="time" value="{{evening.[1]}}"
+                required />
             </div>
           </div>
 
           <div class="col-sm-12">
-            <div class="form-group">
-              <label for="Actividad3">Actividad 3</label>
-              <input class="form-control valid" name="Actividad3" id="Actividad3" type="text"
-                placeholder="Describe la actividad 3" />
-            </div>
+            <h5>La ocupación máxima del establecimiento</h5>
+            <input class="form-control valid" name="ocupacion" id="date" type="number" min="1" value="{{ocupacion}}"
+              required />
           </div>
-
-          <div class="col-sm-12">
-            <div class="form-group">
-              <label for="Actividad4">Actividad 4</label>
-              <input class="form-control valid" name="Actividad4" id="Actividad4" type="text"
-                placeholder="Describe la actividad 4" />
-            </div>
-          </div>
+          <input type="hidden" name="_csrf" value="{{csrfToken}}">
         </div>
         <div class="form-group mt-3">
+
           <button type="submit" class="button button-contactForm boxed-btn">
             Confirmar edición
           </button>

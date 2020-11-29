@@ -1,0 +1,47 @@
+<div class="popular_places_area" style="padding-top: 0">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section_title text-center" style="padding: 20px">
+          <h1>Mis Reservas</h1>
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="row">
+          {{#each reservas}}
+          <div class="col-lg-6 col-md-6">
+            <div class="single_place">
+              <div class="thumb">
+                <img src="img/place/1.jpg" alt="" width="360px" height="200px" />
+              </div>
+              <div class="place_info">
+                <a href="/findelmundo">
+                  <h3>Fin Del Mundo</h3>
+                </a>
+                <p> <strong>Jornada:</strong> {{compareJornada jornada}}</p>
+                <p> <strong>Fecha:</strong> {{compareFecha date}}</p>
+                <p> <strong>Hora:</strong> {{compareHora jornada placeId.morning placeId.evening}}</p>
+                <p> <strong>Numero de viajeros:</strong> {{peopleNumber}}</p>
+                <p> <strong>Lugar: </strong> Putumayo, Colombia </p>
+
+                <a href="https://vintage-warp-hovercraft.glitch.me/" class="genric-btn success-border medium"><i
+                    class="fa fa-image"></i>
+                  &nbsp;
+                  Abre tu cámara</a> <br>
+
+                <a href="/qr/{{_id}}" class="genric-btn success-border medium mt-4"><i class="fa fa-qrcode"></i>
+                  &nbsp;
+                  Ver Código QR</a>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>

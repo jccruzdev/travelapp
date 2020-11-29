@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
@@ -10,10 +9,17 @@ const csrf = require('csurf');
 const helmet = require('helmet');
 const compression = require('compression');
 
+const moment = require('moment');
+moment.locale('es');
+
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const sAdminRoutes = require('./routes/sAdmin');
+const operadorRoutes = require('./routes/operador');
+
+//helpers hbs
+const helpers = require('./util/helpershbs');
 
 const app = express();
 
@@ -23,35 +29,14 @@ const MONGO_URI = `mongodb://root:root@cluster0-shard-00-00.2tcmk.mongodb.net:27
 
 //[Set-up] middlewares
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.engine(
   'hbs',
   exphbs({
     extname: '.hbs',
-    helpers: {
-      comparePath(path, comparator) {
-        if (path === comparator) {
-          return 'active';
-        } else {
-          return '';
-        }
-      },
-      formatPrice(num) {
-        return '$' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-      },
-
-      switch(value, options) {
-        this.switch_value = value;
-        return options.fn(this);
-      },
-
-      case(value, options) {
-        if (value == this.switch_value) {
-          return options.fn(this);
-        }
-      },
-    },
+    helpers,
   })
 );
 app.set('view engine', 'hbs');
@@ -82,7 +67,7 @@ app.use(csrf());
 app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken();
   res.locals.userRole = req.session.userRole;
-  res.locals.isLoggedIn = req.session.isLoggedIn;
+  res.locals.isLoggedIn = req.session.isLoggedIn ? req.session.isLoggedIn : false;
   next();
 });
 
@@ -91,6 +76,7 @@ app.use(authRoutes);
 app.use(userRoutes);
 app.use(adminRoutes);
 app.use(sAdminRoutes);
+app.use(operadorRoutes);
 
 //[Compression: Compress Assets]
 app.use(compression());

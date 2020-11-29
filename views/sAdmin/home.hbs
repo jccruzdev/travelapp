@@ -15,34 +15,24 @@
             <h4>Estado Administradores</h4>
           </div>
 
-          <form action="/login" method="POST" autocomplete="off">
+          <form action="/updActive" method="POST" autocomplete="off">
             <table class="table">
+              {{#each admins}}
               <tr>
-                <td>Administrador 1</td>
+                <td>{{name}}</td>
                 <td>
                   <div class="confirm-switch">
-                    <input type="checkbox" id="confirm-switch1" checked>
-                    <label for="confirm-switch1"></label>
+                    <input type="checkbox" id="confirm-switch{{@index}}" data-id="{{_id}}" name="estado" {{#if active}}
+                      checked {{/if}}>
+                    <label for="confirm-switch{{@index}}"></label>
                   </div>
                 </td>
               </tr>
-              <tr>
-                <td>Administrador 2</td>
-                <td>
-                  <div class="switch-wrap d-flex justify-content-between">
-
-                    <div class="confirm-switch">
-                      <input type="checkbox" id="confirm-switch2">
-                      <label for="confirm-switch2"></label>
-                    </div>
-                  </div>
-                </td>
-              </tr>
+              {{/each}}
             </table>
 
             <div class="form-group mt-3">
-              <input type="hidden" name="_csrf" value="{{csrfToken}}">
-              <button type="submit" class="button button-contactForm boxed-btn">Actualizar</button>
+              <input type="hidden" name="_csrf" id="_csrf" value="{{csrfToken}}">
             </div>
           </form>
         </div>
@@ -81,3 +71,5 @@
     </div>
   </div>
 </div>
+
+<script src="/sAdmin.js"></script>

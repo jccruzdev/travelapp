@@ -5,12 +5,12 @@
         <h3>Reserva Ahora Mismo!</h3>
       </div>
 
-      <form>
+      <form action="/reservar" method="POST">
         <div class="row">
           <div class="col-sm-8">
             <div class="form-group">
               <label for="date">Elige una fecha:</label>
-              <input class="form-control valid" name="date" id="date" type="date" placeholder="Fecha" />
+              <input class="form-control valid" name="date" id="date1" type="date" placeholder="Fecha" />
             </div>
           </div>
 
@@ -38,13 +38,16 @@
           </div>
 
           <div class="col-sm-12 mt-10">
-            <label for="q4">Si respondió SI a alguna de las preguntas ingrese el nombre de la(s) persona(s)
+            <label for="q3">Si respondió SI a alguna de las preguntas ingrese el nombre de la(s) persona(s)
               que presentaron esta experiencia y viajarán con usted por favor:</label>
-            <textarea name="q4" class="single-textarea" id="q4"
+            <textarea name="q3" class="single-textarea" id="q3"
               placeholder="Esta información es por la seguridad de todos expliquenos por favor..."></textarea>
           </div>
 
           <div class="col-sm-12" style="margin-top: 20px">
+            <input type="hidden" name="placeId" value="{{placeId}}">
+            <input type="hidden" name="jornada" value="{{jornada}}">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
             <button type="submit" class="button button-contactForm boxed-btn">
               Realizar Reserva
             </button>
@@ -54,3 +57,5 @@
     </div>
   </div>
 </div>
+
+<script src="reservar.js"></script>
