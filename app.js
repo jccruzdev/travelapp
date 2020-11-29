@@ -9,16 +9,14 @@ const csrf = require('csurf');
 const helmet = require('helmet');
 const compression = require('compression');
 
-const moment = require('moment');
-moment.locale('es');
-
+//[Import routes]
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const sAdminRoutes = require('./routes/sAdmin');
 const operadorRoutes = require('./routes/operador');
 
-//helpers hbs
+//[Function helpers - hbs]
 const helpers = require('./util/helpershbs');
 
 const app = express();
