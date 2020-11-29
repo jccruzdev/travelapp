@@ -3,6 +3,9 @@ moment.locale('es');
 
 module.exports = {
   compareDay(diasTrabajo, dia) {
+    if (!diasTrabajo) {
+      return '';
+    }
     let found = diasTrabajo.some((diaTrab) => diaTrab === dia);
     if (found) {
       return 'checked';

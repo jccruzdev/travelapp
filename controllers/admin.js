@@ -2,38 +2,19 @@ const User = require('../models/user');
 const Place = require('../models/place');
 const bcrypt = require('bcrypt');
 
-exports.getIndex = function (req, res) {
-  res.render('admin/home');
+exports.getIndex = async function (req, res) {
+  const user = await User.findById(req.session.userId);
+  res.render('admin/home', { userActive: user.active });
 };
 
-exports.getEditDesc = function (req, res) {
-  res.render('admin/admin_edit_desc');
-};
+exports.getEditActividad = async function (req, res) {
+  const user = await User.findById(req.session.userId).select('place').populate('place');
+  const place = user.place;
 
-exports.getEditActividad = function (req, res) {
-  console.log(req.session.place);
-  if (req.session.place) {
-    Place.findOne({ _id: req.session.place })
-      .then((place) => {
-        res.render('admin/admin_edit_activ', {
-          nombre: place.nombre,
-          diasTrabajo: place.diasTrabajo,
-          morning: place.morning,
-          evening: place.evening,
-          ocupacion: place.ocupacion,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  if (place) {
+    res.render('admin/admin_edit_activ', place);
   } else {
-    res.render('admin/admin_edit_activ', {
-      newPlace: true,
-      diasTrabajo: [],
-      morning: [],
-      evening: [],
-      ocupacion: [],
-    });
+    res.render('admin/admin_edit_activ', { newPlace: true });
   }
 };
 
@@ -41,239 +22,125 @@ exports.getEditOcupacion = function (req, res) {
   res.render('admin/admin_edit_ocup');
 };
 
-exports.getEditOperador = function (req, res) {
-  if (req.session.operador) {
-    User.findOne({ _id: req.session.operador })
-      .then((operador) => {
-        res.render('admin/admin_edit_oper', { email: operador.email });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+exports.getEditOperador = async function (req, res) {
+  const admin = await User.findById(req.session.userId).select('operador').populate('operador');
+  const operador = admin.operador;
+
+  if (operador) {
+    res.render('admin/admin_edit_oper', { email: operador.email });
   } else {
-    res.render('admin/admin_edit_oper', { newAdmin: true });
+    res.render('admin/admin_edit_oper', { newOper: true });
   }
 };
 
-exports.postEditOperador = function (req, res) {
+exports.postEditOperador = async function (req, res) {
   const email = req.body.email;
   const password = req.body.password.toLowerCase();
 
-  let operadorMongo = undefined;
+  try {
+    const admin = await User.findById(req.session.userId);
+    const operadorId = admin.operador;
 
-  User.findOne({ _id: req.session.operador })
-    .then((operador) => {
-      operadorMongo = operador;
-      return bcrypt.hash(password, 10);
-    })
-    .then((hashedPassword) => {
-      operadorMongo.email = email;
-      operadorMongo.password = hashedPassword;
-      return operadorMongo.save();
-    })
-    .then((result) => {
+    //Si  existe un operador actualizarlo, si no , crearlo
+    if (operadorId) {
+      const operador = await User.findById(operadorId);
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      operador.email = email;
+      operador.password = hashedPassword;
+      const result = operador.save();
+
       console.log('OPERADOR ACTUALIZADO');
       res.redirect('/admin');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-exports.postNuevoOperador = function (req, res) {
-  const email = req.body.email;
-  const password = req.body.password.toLowerCase();
-
-  let idOperador = undefined;
-
-  //Verificar si usuario existe
-  User.findOne({ email: email })
-    .then((user) => {
-      if (user) {
-        res.render('signup', {
-          errorMsg: `El usuario ${email} se encuentra registrado`,
-          oldInput: {
-            email: email,
-            password: password,
-          },
-        });
-        return Promise.reject({
-          code: 'FUSER',
-          msg: 'Usuario ya registrado',
-        });
-      }
-
-      //Encriptar contraseña
-      return bcrypt.hash(password, 10);
-    })
-    .then((hashedPassword) => {
-      const user = new User({
+    } else {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const operador = new User({
         role: 'operator',
         name: 'operador',
         email: email,
         password: hashedPassword,
       });
-      return user.save();
-    })
-    .then((result) => {
-      console.log('Usuario REGISTRADO');
-      //guardar id del operador
-      idOperador = result._id;
-      //Asociar usuario creado al nuevo operador
-      return User.findOne({ _id: req.session.userId });
-    })
-    .then((admin) => {
-      admin.operador = idOperador;
-      return admin.save();
-    })
-    .then((result) => {
-      //reset req.session al operador creado
-      req.session.operador = result.operador;
+      admin.operador = operador._id;
+
+      const result1 = await admin.save();
+      const result2 = await operador.save();
+
       console.log('Asociacion del operador al admin EXITOSA');
       res.redirect('/admin');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-exports.postNuevaActividad = function (req, res) {
-  const body = req.body;
+exports.postNuevaActividad = async function (req, res) {
+  try {
+    let { nombre, ocupacion } = req.body;
+    let body = req.body;
 
-  //Verificar dias seleccionados
-  let diasOp = [];
+    //pasar a entero
+    ocupacion = Number(body.ocupacion);
 
-  if (body['domingo']) {
-    diasOp.push(0);
-  }
-  if (body['lunes']) {
-    diasOp.push(1);
-  }
+    //Verificar dias seleccionados
+    let diasTrabajo = [];
 
-  if (body['martes']) {
-    diasOp.push(2);
-  }
+    if (body['domingo']) diasTrabajo.push(0);
 
-  if (body['miercoles']) {
-    diasOp.push(3);
-  }
-  if (body['jueves']) {
-    diasOp.push(4);
-  }
-  if (body['viernes']) {
-    diasOp.push(5);
-  }
-  if (body['sabado']) {
-    diasOp.push(6);
-  }
+    if (body['lunes']) diasTrabajo.push(1);
 
-  //obtener nombre del lugar
-  let nombre = body.nombre;
+    if (body['martes']) diasTrabajo.push(2);
 
-  //Obtener horario mañana
-  let morning = [body.morning1, body.morning2];
+    if (body['miercoles']) diasTrabajo.push(3);
 
-  //Obtener horario tarde
-  let evening = [body.evening1, body.evening2];
+    if (body['jueves']) diasTrabajo.push(4);
 
-  //obtener ocupación
-  let ocupacion = Number(body.ocupacion);
+    if (body['viernes']) diasTrabajo.push(5);
 
-  //obtener id del administrador del lugar
-  let adminId = req.session.userId;
+    if (body['sabado']) diasTrabajo.push(6);
 
-  //guardar placeId
-  let placeId = undefined;
+    //verificar horarios
+    const morning = [body.morning1, body.morning2];
+    const evening = [body.evening1, body.evening2];
 
-  const place = new Place({
-    nombre,
-    diasTrabajo: diasOp,
-    morning,
-    evening,
-    ocupacion,
-  });
+    //Enlazar Lugar a Admin
 
-  place
-    .save()
-    .then((place) => {
-      console.log('LUGAR AGREGADO');
-      placeId = place._id;
-      return User.findOne({ _id: adminId });
-    })
-    .then((admin) => {
-      admin.place = placeId;
-      //reset place a req.session.place
-      req.session.place = placeId;
-      return admin.save();
-    })
-    .then((result) => {
-      console.log('PLACE asociado con ADMIN');
-      res.redirect('/admin');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+    const admin = await User.findById(req.session.userId);
+    const placeId = admin.place;
 
-exports.postEditActividad = function (req, res) {
-  const body = req.body;
+    if (placeId) {
+      const place = await Place.findById(placeId);
 
-  //Verificar dias seleccionados
-  let diasOp = [];
-
-  if (body['domingo']) {
-    diasOp.push(0);
-  }
-  if (body['lunes']) {
-    diasOp.push(1);
-  }
-
-  if (body['martes']) {
-    diasOp.push(2);
-  }
-
-  if (body['miercoles']) {
-    diasOp.push(3);
-  }
-  if (body['jueves']) {
-    diasOp.push(4);
-  }
-  if (body['viernes']) {
-    diasOp.push(5);
-  }
-  if (body['sabado']) {
-    diasOp.push(6);
-  }
-
-  //obtener nombre del lugar
-  let nombre = body.nombre;
-
-  //Obtener horario mañana
-  let morning = [body.morning1, body.morning2];
-
-  //Obtener horario tarde
-  let evening = [body.evening1, body.evening2];
-
-  //obtener ocupación
-  let ocupacion = Number(body.ocupacion);
-
-  //obtener id del lugar
-  let placeId = req.session.place;
-
-  Place.findOne({ _id: placeId })
-    .then((place) => {
       place.nombre = nombre;
-      place.diasTrabajo = diasOp;
+      place.diasTrabajo = diasTrabajo;
       place.morning = morning;
       place.evening = evening;
       place.ocupacion = ocupacion;
-      return place.save();
-    })
-    .then((lugar) => {
+
+      const result = await place.save();
+
       console.log('LUGAR ACTUALIZADO CORRECTAMENTE');
       res.redirect('/admin');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    } else {
+      const place = new Place({
+        nombre,
+        diasTrabajo,
+        morning,
+        evening,
+        ocupacion,
+      });
+
+      //Guardar Lugar
+      const result1 = await place.save();
+      console.log('LUGAR AGREGADO');
+
+      //Enlazar Lugar a Admin
+      const admin = await User.findById(req.session.userId);
+      admin.place = result1._id;
+      const result2 = await admin.save();
+      console.log('LUGAR asociado con ADMIN');
+      res.redirect('/admin');
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };

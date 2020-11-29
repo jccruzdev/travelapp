@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 const User = require('../models/user');
 const crypto = require('crypto');
+const user = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
   res.render('login', {
@@ -68,8 +69,10 @@ exports.postLogin = (req, res, next) => {
           },
         });
       }
+
       req.session.userId = userFound._id;
       req.session.userRole = userFound.role;
+      req.session.active = userFound.active;
       req.session.isLoggedIn = true;
       req.session.operador = userFound.operador;
       req.session.place = userFound.place;

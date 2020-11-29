@@ -2,6 +2,7 @@
   <h3>Panel Administrador</h3>
 </div>
 
+{{#if userActive}}
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-lg-4 col-md-6">
@@ -64,3 +65,14 @@
     </div>
   </div>
 </div>
+{{else}}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="section_title text-center">
+        <h3>Usuario Inactivo, Comuníquese con el administrador!</h3>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}
