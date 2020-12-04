@@ -20,6 +20,7 @@
   Html5Qrcode.getCameras().then(cameras => {
     if (cameras && cameras.length) {
       let cameraId
+      alert(screen.width)
       if (screen.width > 1000) {
         cameraId = cameras[0].id;
       } else {
