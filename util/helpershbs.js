@@ -33,7 +33,14 @@ module.exports = {
       return `${evening[0]}-${evening[1]}`;
     }
   },
-
+  formatoH(hora) {
+    var ts = hora;
+    var H = +ts.substr(0, 2);
+    var h = H % 12 || 12;
+    h = h < 10 ? '0' + h : h; // leading 0 at the left for 1 digit hours
+    ts = h + ts.substr(2, 3);
+    return ts;
+  },
   switch(value, options) {
     this.switch_value = value;
     return options.fn(this);

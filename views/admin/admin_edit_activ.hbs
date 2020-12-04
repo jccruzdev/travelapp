@@ -15,10 +15,17 @@
             <div class="form-group">
               <h5 for="nombre">Tiulo Del Lugar</h5>
               <input type="text" class="form-control valid" id="nombre" name="nombre" value="{{nombre}}"
-                placeholder="Ingresa un nombre llamativo..." required>
+                placeholder="ej. Cascadas del putumayo" required>
             </div>
           </div>
+
           <div class="col-sm-12">
+            <h5>Ubicacion</h5>
+            <input class="form-control valid" name="ubicacion" id="date" type="text" value="{{ubicacion}}"
+              placeholder="ej. Putumayo, Colombia" required />
+          </div>
+
+          <div class="col-sm-12 mt-2">
             <div class="form-group">
               <h5>Elige los dias disponibles para reservar</h5>
               <label for="lunes">Lunes</label>

@@ -12,11 +12,11 @@ const userSchema = new mongoose.Schema({
   },
 
   operador: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
   },
 
   place: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Place',
   },
 

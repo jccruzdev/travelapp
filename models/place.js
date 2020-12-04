@@ -21,9 +21,12 @@ const placeSchema = new mongoose.Schema({
     type: Schema.Types.Array,
     default: [],
   },
-
   ocupacion: {
     type: Number,
+    required: true,
+  },
+  ubicacion: {
+    type: String,
     required: true,
   },
 });

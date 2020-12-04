@@ -10,7 +10,7 @@
       <div class="col-lg-12">
         <div class="row">
           {{#each reservas}}
-          <div class="col-lg-6 col-md-6">
+          <div class="col-lg-6 col-md-6" data-id="{{_id}}">
             <div class="single_place">
               <div class="thumb">
                 <img src="img/place/1.jpg" alt="" width="360px" height="200px" />
@@ -20,8 +20,8 @@
                   <h3>Fin Del Mundo</h3>
                 </a>
                 <p> <strong>Jornada:</strong> {{compareJornada jornada}}</p>
-                <p> <strong>Fecha:</strong> {{compareFecha date}}</p>
                 <p> <strong>Hora:</strong> {{compareHora jornada placeId.morning placeId.evening}}</p>
+                <p> <strong>Fecha:</strong> {{compareFecha date}}</p>
                 <p> <strong>Numero de viajeros:</strong> {{peopleNumber}}</p>
                 <p> <strong>Lugar: </strong> Putumayo, Colombia </p>
 
@@ -32,16 +32,52 @@
 
                 <a href="/qr/{{_id}}" class="genric-btn success-border medium mt-4"><i class="fa fa-qrcode"></i>
                   &nbsp;
-                  Ver Código QR</a>
+                  Ver Código QR</a> <br>
+
+                <button class="deleteBtn genric-btn danger-border medium mt-4"><i class="fa fa-remove "></i>
+                  &nbsp;
+                  Cancelar Reserva</button>
+
               </div>
             </div>
           </div>
           {{/each}}
         </div>
       </div>
-
-
-
     </div>
   </div>
 </div>
+
+<form>
+  <input type="hidden" name="_csrf" id="_csrf" value="{{csrfToken}}">
+</form>
+
+<script>
+
+  document.querySelector(".deleteBtn").addEventListener("click", async function (e) {
+    try {
+      if (!confirm("¿Esta seguro que desea eliminar su reserva?")) {
+        return
+      }
+
+      const idReserva = e.target.parentElement.parentElement.parentElement.dataset.id;
+      let csrf = document.querySelector('#_csrf').value;
+
+      const res = await fetch(`/reserva/${idReserva}`, {
+        method: 'DELETE',
+        headers: {
+          'csrf-token': csrf,
+        },
+      });
+
+      const result = await res.json();
+
+      console.log(result)
+
+      e.target.parentElement.parentElement.parentElement.remove()
+    } catch (error) {
+      console.log(error)
+    }
+
+  });
+</script>

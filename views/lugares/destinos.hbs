@@ -7,8 +7,10 @@
         </div>
       </div>
 
-      <div class="col-lg-8">
+      <div class="col-lg-10">
         <div class="row">
+
+          {{#each destinos}}
           <div class="col-lg-6 col-md-6">
             <div class="single_place">
               <div class="thumb">
@@ -16,29 +18,31 @@
                 <a href="#" class="prise">Precio: $40.000</a>
               </div>
               <div class="place_info">
-                <a href="/findelmundo">
-                  <h3>Fin Del Mundo</h3>
+                <a href="/findelmundo/{{_id}}">
+                  <h3>{{nombre}}</h3>
                 </a>
-                <p>Putumayo, Colombia</p>
+                <p>{{ubicacion}}</p>
+                <p><strong>Ocupación Máxima:</strong> {{ocupacion}}</p>
                 <div class="rating_days d-flex justify-content-between">
                   <span class="d-flex justify-content-center align-items-center">
-                    <a href="#">Jornadas:</a>
+                    <a href="#"><strong>Jornadas:</strong> </a>
                   </span>
                   <div class="days">
                     <i class="fa fa-clock-o"></i>
-                    <a href="#">7-12 AM</a>
+                    <a href="#"> {{formatoH morning.[0]}} - {{formatoH morning.[1]}} AM</a>
                   </div>
 
                   <div class="days">
                     <i class="fa fa-clock-o"></i>
-                    <a href="#">2-6 PM</a>
+                    <a href="#">{{formatoH evening.[0]}} - {{formatoH evening.[1]}} PM</a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          {{/each}}
 
-          <div class="col-lg-6 col-md-6">
+          {{!-- <div class="col-lg-6 col-md-6">
             <div class="single_place">
               <div class="thumb">
                 <img src="img/place/2.jpg" alt="" width="360px" height="200px" />
@@ -65,7 +69,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
     </div>

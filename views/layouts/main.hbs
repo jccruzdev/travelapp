@@ -49,8 +49,8 @@
                       {{#switch userRole}}
                       {{#case 'tourist'}}
                       <li><a class="active" href="/">Inicio</a></li>
-                      <li><a href="/misreservas">Mis Reservas</a></li>
                       <li><a href="/destinos">Destinos</a></li>
+                      <li><a href="/misreservas">Mis Reservas</a></li>
                       <li><a href="/about">Nosotros</a></li>
                       {{/case}}
                       {{#case 'admin'}}
@@ -60,7 +60,7 @@
                       <li><a class="active" href="/sAdmin">Inicio</a></li>
                       {{/case}}
                       {{#case 'operator'}}
-                      <li><a class="active" href="/">Inicio</a></li>
+                      <li><a class="active" href="/operador">Inicio</a></li>
                       {{/case}}
                       {{/switch}}
                       {{else}}

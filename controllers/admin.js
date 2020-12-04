@@ -75,7 +75,7 @@ exports.postEditOperador = async function (req, res) {
 
 exports.postNuevaActividad = async function (req, res) {
   try {
-    let { nombre, ocupacion } = req.body;
+    let { nombre, ocupacion, ubicacion } = req.body;
     let body = req.body;
 
     //pasar a entero
@@ -103,7 +103,6 @@ exports.postNuevaActividad = async function (req, res) {
     const evening = [body.evening1, body.evening2];
 
     //Enlazar Lugar a Admin
-
     const admin = await User.findById(req.session.userId);
     const placeId = admin.place;
 
@@ -115,6 +114,7 @@ exports.postNuevaActividad = async function (req, res) {
       place.morning = morning;
       place.evening = evening;
       place.ocupacion = ocupacion;
+      place.ubicacion = ubicacion;
 
       const result = await place.save();
 
@@ -127,6 +127,7 @@ exports.postNuevaActividad = async function (req, res) {
         morning,
         evening,
         ocupacion,
+        ubicacion,
       });
 
       //Guardar Lugar

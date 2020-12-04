@@ -23,7 +23,7 @@ const app = express();
 
 //[Constants]
 const PORT = 3000;
-const MONGO_URI = `mongodb://root:root@cluster0-shard-00-00.2tcmk.mongodb.net:27017,cluster0-shard-00-01.2tcmk.mongodb.net:27017,cluster0-shard-00-02.2tcmk.mongodb.net:27017/travelapp?ssl=true&replicaSet=atlas-e4dmvy-shard-0&authSource=admin&retryWrites=true&w=majority`;
+const MONGO_URI = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-shard-00-00.2tcmk.mongodb.net:27017,cluster0-shard-00-01.2tcmk.mongodb.net:27017,cluster0-shard-00-02.2tcmk.mongodb.net:27017/${process.env.MONGO_DB}?ssl=true&replicaSet=atlas-e4dmvy-shard-0&authSource=admin&retryWrites=true&w=majority`;
 
 //[Set-up] middlewares
 app.use(express.static(path.join(__dirname, 'public')));

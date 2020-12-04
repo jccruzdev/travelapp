@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js",
-    "start": "node app.js"
+    "dev": "env MONGO_USER=root MONGO_PASS=root MONGO_DB=travelapp  nodemon app.js",
+    "start": "env MONGO_USER=root MONGO_PASS=root MONGO_DB=travelapp node app.js"
   },
   "keywords": [],
   "author": "",
