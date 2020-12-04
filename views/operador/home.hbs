@@ -12,25 +12,24 @@
       <div id="reader" style="margin: auto;"></div>
     </div>
   </div>
+
 </div>
+
+
+
 
 
 <script src="js/html5-qrcode.min.js"></script>
 <script>
   Html5Qrcode.getCameras().then(cameras => {
     if (cameras && cameras.length) {
-      let cameraId
-      alert(screen.width)
-      if (screen.width > 1000) {
-        cameraId = cameras[0].id;
-      } else {
-        cameraId = cameras[0].id;
-      }
+
+      let cameraId = cameras[0].id;
       console.log(cameraId);
 
       const html5QrCode = new Html5Qrcode("reader");
       html5QrCode.start(
-        cameraId,
+        { facingMode: "environment" },
         {
           fps: 10,
           qrbox: 250
