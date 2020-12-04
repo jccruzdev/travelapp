@@ -1,23 +1,30 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-lg-6">
-      <div class="section_title text-center">
+      <div class="section_title text-center mt-4">
         <h3>Leyendo Código QR...</h3>
       </div>
     </div>
   </div>
+
+  <div class="row justify-content-center">
+    <div class=" col-lg-6">
+      <div id="reader" style="margin: auto;"></div>
+    </div>
+  </div>
 </div>
-
-
-<div style="width: 500px; margin:auto" id="reader"></div>
-
 
 
 <script src="js/html5-qrcode.min.js"></script>
 <script>
   Html5Qrcode.getCameras().then(cameras => {
     if (cameras && cameras.length) {
-      let cameraId = cameras[0].id;
+      let cameraId
+      if (screen.width > 1000) {
+        cameraId = cameras[0].id;
+      } else {
+        cameraId = cameras[1].id;
+      }
       console.log(cameraId);
 
       const html5QrCode = new Html5Qrcode("reader");
