@@ -17,13 +17,13 @@
               </div>
               <div class="place_info">
                 <a href="/findelmundo">
-                  <h3>Fin Del Mundo</h3>
+                  <h3>{{placeId.nombre}}</h3>
                 </a>
                 <p> <strong>Jornada:</strong> {{compareJornada jornada}}</p>
                 <p> <strong>Hora:</strong> {{compareHora jornada placeId.morning placeId.evening}}</p>
                 <p> <strong>Fecha:</strong> {{compareFecha date}}</p>
                 <p> <strong>Numero de viajeros:</strong> {{peopleNumber}}</p>
-                <p> <strong>Lugar: </strong> Putumayo, Colombia </p>
+                <p> <strong>Lugar: </strong> {{placeId.ubicacion}} </p>
 
                 <a href="https://vintage-warp-hovercraft.glitch.me/" class="genric-btn success-border medium"><i
                     class="fa fa-image"></i>
@@ -37,7 +37,6 @@
                 <button class="deleteBtn genric-btn danger-border medium mt-4"><i class="fa fa-remove "></i>
                   &nbsp;
                   Cancelar Reserva</button>
-
               </div>
             </div>
           </div>

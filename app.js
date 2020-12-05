@@ -75,6 +75,9 @@ app.use(userRoutes);
 app.use(adminRoutes);
 app.use(sAdminRoutes);
 app.use(operadorRoutes);
+app.use((req, res) => {
+  res.status(404).render('404');
+});
 
 //[Compression: Compress Assets]
 app.use(compression());
