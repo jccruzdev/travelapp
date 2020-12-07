@@ -1,5 +1,7 @@
 const Place = require('../models/place');
 const Reserva = require('../models/reserva');
+const Establecimiento = require('../models/establecimiento');
+
 const qrcode = require('qrcode');
 
 const moment = require('moment');
@@ -64,14 +66,9 @@ exports.postReservar = async function (req, res) {
   let { date, peopleNumber, placeId, jornada, q1, q2, q3 } = req.body;
   const userId = req.session.userId;
 
-  //formatear placeId - porque genera un espacio adicional al final del string
-  placeId = placeId.trim();
-
-  //Formatear Fecha
-  const year = date.split('-')[0];
-  const month = date.split('-')[1];
-  const day = date.split('-')[2];
-  date = new Date(year, month, day);
+  //obtener fecha
+  date = new Date(date);
+  date.setUTCHours(15);
 
   //Establecer a off cuando no se marca la casilla
   if (!q1) q1 = 'off';
@@ -84,14 +81,32 @@ exports.postReservar = async function (req, res) {
     jornada,
     placeId,
     userId,
-    q1,
-    q2,
-    q3,
+    preguntas: { q1, q2, q3 },
   });
 
   try {
     const result = await reserva.save();
     console.log('RESERVA GUARDADA');
+
+    //[GENERAR ESTABLECIMIENTO]
+    const place = await Place.findById(result.placeId);
+    let est = await Establecimiento.findOne({ date: result.date, jornada: result.jornada });
+
+    if (!est) {
+      //Generar establecimiento:
+      est = new Establecimiento({
+        placeId: result.placeId,
+        date: result.date,
+        ocupacion: place.ocupacion - result.peopleNumber,
+        jornada: result.jornada,
+      });
+      const result2 = await est.save();
+      console.log('ESTABLECIMIENTO CREADO Y ACTUALIZADO');
+    } else {
+      est.ocupacion = est.ocupacion - result.peopleNumber;
+      const result2 = await est.save();
+      console.log('ESTABLECIMIENTO ACTUALIZADO');
+    }
     res.redirect('/misreservas');
   } catch (error) {
     console.log(error);

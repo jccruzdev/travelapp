@@ -29,14 +29,15 @@ const reservaSchema = new mongoose.Schema({
     required: true,
   },
 
-  q1: {
-    type: String,
+  preguntas: {
+    type: Object,
+    required: true,
   },
-  q2: {
+
+  estado: {
+    // a-no ha entrado  b-ha entrado c-ha entrado y ya salio
     type: String,
-  },
-  q3: {
-    type: String,
+    default: 'a',
   },
 });
 
