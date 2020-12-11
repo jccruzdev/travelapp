@@ -30,10 +30,10 @@
           fps: 10,
           qrbox: 250
         },
-        qrCodeMessage => {
+        async function (qrCodeMessage) {
           console.log(`QR Code detected: ${qrCodeMessage}`);
           alert(qrCodeMessage);
-          window.location.replace("http://www.w3schools.com");
+          //window.location.replace("http://www.w3schools.com");
         },
         errorMessage => {
           // parse error, ideally ignore it. For example:
