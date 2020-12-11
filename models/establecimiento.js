@@ -11,9 +11,13 @@ const establecimientoSchema = new mongoose.Schema({
     type: Schema.Types.Date,
     required: true,
   },
-  ocupacion: {
+  cupos: {
     type: Number,
     required: true,
+  },
+  ocupacionActual: {
+    type: Number,
+    default: 0,
   },
   jornada: {
     type: String,

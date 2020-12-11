@@ -1,5 +1,8 @@
 const User = require('../models/user');
 const Place = require('../models/place');
+const Establecimiento = require('../models/establecimiento');
+const Reserva = require('../models/reserva');
+
 const bcrypt = require('bcrypt');
 
 exports.getIndex = async function (req, res) {
@@ -30,6 +33,26 @@ exports.getEditOperador = async function (req, res) {
     res.render('admin/admin_edit_oper', { email: operador.email });
   } else {
     res.render('admin/admin_edit_oper', { newOper: true });
+  }
+};
+
+exports.getEstablecimiento = async function (req, res) {
+  try {
+    const admin = await User.findById(req.session.userId);
+    const establecimientos = await Establecimiento.find({ placeId: admin.place }).lean();
+    res.render('admin/establecimiento', { establecimientos });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.getReserva = async function (req, res) {
+  try {
+    const admin = await User.findById(req.session.userId);
+    const reservas = await Reserva.find({ placeId: admin.place }).lean();
+    res.render('admin/reserva', { reservas });
+  } catch (error) {
+    console.log(error);
   }
 };
 

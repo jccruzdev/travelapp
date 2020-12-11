@@ -59,12 +59,18 @@ exports.getFinDelMundo = function (req, res) {
 exports.getReservar = function (req, res) {
   const placeId = req.query.placeId;
   const jornada = req.query.jornada;
+
+  req.session.placeId = placeId;
+  req.session.jornada = jornada;
+
   res.render('lugares/reservar', { placeId: placeId, jornada: jornada });
 };
 
 exports.postReservar = async function (req, res) {
-  let { date, peopleNumber, placeId, jornada, q1, q2, q3 } = req.body;
+  let { date, peopleNumber, q1, q2, q3 } = req.body;
   const userId = req.session.userId;
+  const placeId = req.session.placeId;
+  const jornada = req.session.jornada;
 
   //obtener fecha
   date = new Date(date);
@@ -83,27 +89,46 @@ exports.postReservar = async function (req, res) {
     userId,
     preguntas: { q1, q2, q3 },
   });
-
   try {
+    const place = await Place.findById(placeId);
+    let est = await Establecimiento.findOne({ date, jornada });
+
+    if (est && est.cupos == 0) {
+      return res.render('lugares/reservar', {
+        errorMsg: `Ya no quedan cupos para el ${moment(est.date).format('LL')}`,
+      });
+    }
+
+    if (est && peopleNumber > est.cupos) {
+      return res.render('lugares/reservar', {
+        errorMsg: `No puedes reservar para mas de ${est.cupos} personas el ${moment(
+          est.date
+        ).format('LL')}`,
+      });
+    }
+
+    //verificar que no se exceda el cupo maximo
+    if (place && peopleNumber > place.ocupacion) {
+      return res.render('lugares/reservar', {
+        errorMsg: `No puedes reservar para mas de ${place.ocupacion} personas en este establecimiento`,
+      });
+    }
     const result = await reserva.save();
     console.log('RESERVA GUARDADA');
 
     //[GENERAR ESTABLECIMIENTO]
-    const place = await Place.findById(result.placeId);
-    let est = await Establecimiento.findOne({ date: result.date, jornada: result.jornada });
-
     if (!est) {
       //Generar establecimiento:
       est = new Establecimiento({
         placeId: result.placeId,
         date: result.date,
-        ocupacion: place.ocupacion - result.peopleNumber,
+        cupos: place.ocupacion - result.peopleNumber,
         jornada: result.jornada,
       });
       const result2 = await est.save();
       console.log('ESTABLECIMIENTO CREADO Y ACTUALIZADO');
     } else {
-      est.ocupacion = est.ocupacion - result.peopleNumber;
+      est.cupos = est.cupos - result.peopleNumber;
       const result2 = await est.save();
       console.log('ESTABLECIMIENTO ACTUALIZADO');
     }
@@ -114,14 +139,24 @@ exports.postReservar = async function (req, res) {
 };
 
 exports.deleteReserva = async function (req, res) {
+  //Eliminar Reserva
   const idReserva = req.params.idReserva;
   const result = await Reserva.findByIdAndDelete(idReserva);
+
+  //Eliminar ocupacion del establecimiento
+  const result2 = await Establecimiento.findOne({
+    date: result.date,
+    jornada: result.jornada,
+  });
+  result2.cupos = result2.cupos + result.peopleNumber;
+  const result3 = await result2.save();
+
+  //Enviar Response
   res.json({ msg: 'Reserva Eliminada', result });
 };
 
 exports.getDays = async function (req, res) {
   const placeId = req.params.placeId;
-
   try {
     const place = await Place.findById(placeId).select('diasTrabajo');
     res.json({ diasTrabajo: [...place.diasTrabajo] });

@@ -16,3 +16,16 @@ const getDias = async function () {
 };
 
 getDias();
+
+//Eliminar mensaje de error (si existe)
+const deleteRenderedErrors = function () {
+  const renderedError = document.querySelector('.renderedErrors');
+
+  if (renderedError) {
+    setTimeout(function () {
+      renderedError.remove();
+    }, 6000);
+  }
+};
+
+deleteRenderedErrors();

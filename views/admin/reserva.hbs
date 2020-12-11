@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row justify-content-center  mt-4">
+    <div class="col-lg-6 ">
+      <div class="section_title text-center">
+        <h3>Reservas</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="row  mt-4">
+    <div class="col-lg-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Jornada</th>
+            <th>Cantidad Viajeros</th>
+            <th>P. 1</th>
+            <th>P. 2</th>
+            <th>P. 3</th>
+            <th>Ver</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each reservas}}
+          <tr>
+            <td>{{compareFecha this.date}}</td>
+            <td>{{compareJornada this.jornada}}</td>
+            <td> {{this.peopleNumber}} Personas</td>
+            <td>{{this.preguntas.q1}}</td>
+            <td>{{this.preguntas.q2}}</td>
+            <td>{{this.preguntas.q3}}</td>
+            <td><a class="active" href="/admin/turista/{{userId}}"> Ver Turista <i class="fa fa-eye"></i></a> </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
