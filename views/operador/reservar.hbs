@@ -1,0 +1,66 @@
+<div class="popular_places_area" style="padding-bottom:0; padding-top:25px">
+          <div class="container">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6">
+                  <div class="single_place">
+                    <div class="place_info">
+                      <h3>Tour sesión 1</h3>
+                      <p>Jornada mañana</p>
+                      <div class="activity-content" style="overflow-x: auto">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>Camino de piedra 8-9 am</td>
+                            </tr>
+                            <tr>
+                              <td>Cascada el indio 8-9 am</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="more_place_btn text-center">
+                        {{#if isLoggedIn}}
+                        <a class="boxed-btn4" href="/reservar?placeId={{destinoId}}&jornada=morning">Reservar</a>
+                        {{else}}
+                        <a class="boxed-btn4" href="/login">Reservar</a>
+                        {{/if}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                  <div class="single_place">
+                    <div class="place_info">
+                      <h3>Tour sesión 2</h3>
+                      <p>Jornada tarde</p>
+                      <div class="activity-content" style="overflow-x: auto">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td>Camino de piedra 8-9 am</td>
+                            </tr>
+                            <tr>
+                              <td>Cascada el indio 8-9 am</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="more_place_btn text-center">
+
+                        {{#if isLoggedIn}}
+                        <a class="boxed-btn4" href="/reservar?placeId={{destinoId}}&jornada=evening">Reservar</a>
+                        {{else}}
+                        <a class="boxed-btn4" href="/login">Reservar</a>
+                        {{/if}}
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+<script src="reservar.js"></script>
