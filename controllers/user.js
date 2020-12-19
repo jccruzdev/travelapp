@@ -5,6 +5,7 @@ const Establecimiento = require('../models/establecimiento');
 const qrcode = require('qrcode');
 
 const moment = require('moment');
+const { reset } = require('nodemon');
 moment.locale('es');
 
 exports.getIndex = function (req, res) {
@@ -149,7 +150,18 @@ exports.deleteReserva = async function (req, res) {
     jornada: result.jornada,
   });
   result2.cupos = result2.cupos + result.peopleNumber;
-  const result3 = await result2.save();
+
+  //Consultar lugar
+  const place = await Place.findById(result2.placeId);
+  console.log(result2.cupos, place.ocupacion);
+
+  if (result2.cupos === place.ocupacion) {
+    const result3 = await result2.remove();
+    console.log('Reserva eliminada y Establecimiento eliminado');
+  } else {
+    const result3 = await result2.save();
+    console.log('Reserva eliminada');
+  }
 
   //Enviar Response
   res.json({ msg: 'Reserva Eliminada', result });

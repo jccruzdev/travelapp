@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
 
   operador: {
     type: Schema.Types.ObjectId,
+    ref: 'User',
   },
 
   place: {

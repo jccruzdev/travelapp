@@ -49,7 +49,7 @@ exports.getEstablecimiento = async function (req, res) {
 exports.getReserva = async function (req, res) {
   try {
     const admin = await User.findById(req.session.userId);
-    const reservas = await Reserva.find({ placeId: admin.place }).lean();
+    const reservas = await Reserva.find({ placeId: admin.place }).populate('userId').lean();
     res.render('admin/reserva', { reservas });
   } catch (error) {
     console.log(error);

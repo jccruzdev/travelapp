@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const establecimientoSchema = new mongoose.Schema({
   placeId: {
     type: Schema.Types.ObjectId,
+    ref: 'Place',
     required: true,
   },
   date: {

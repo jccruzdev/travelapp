@@ -33,7 +33,7 @@
         async function (qrCodeMessage) {
           console.log(`QR Code detected: ${qrCodeMessage}`);
           alert(qrCodeMessage);
-          //window.location.replace("http://www.w3schools.com");
+          window.location.replace(`/success?idReserva=${qrCodeMessage}`);
         },
         errorMessage => {
           // parse error, ideally ignore it. For example:

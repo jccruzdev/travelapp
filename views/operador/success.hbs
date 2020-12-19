@@ -2,7 +2,8 @@
   <div class="row justify-content-center">
     <div class="col-lg-6 mt-4">
       <div class="section_title text-center">
-        <h3>Fin del Mundo Extremo</h3>
+        <h3>{{reserva.placeId.nombre}}
+        </h3>
       </div>
       <div class="section_title text-center">
         <img src="https://www.flaticon.es/svg/static/icons/svg/190/190411.svg" width="128" alt="">
@@ -11,10 +12,12 @@
     <div class="col-lg-6 mt-4">
       <div class="section_title text-center">
         <ul>
-          <li>Personas que realizaron la reserva: <strong> 15</strong></li>
-          <li>Fecha de la reserva: <strong>25 Abril 2021 </strong> </li>
+          <li>Personas que pueden ingresar: <strong> {{reserva.peopleNumber}}</strong></li>
+          <li>Fecha de la reserva: <strong>{{compareFecha reserva.date}} </strong> </li>
+          <li>Jornada: <strong>{{compareJornada reserva.jornada}} </strong> </li>
+          <li>Responsable: <strong>{{reserva.userId.name}}</strong> </li>
         </ul>
-        <h4 class="mt-4">Cupos Restantes: 12</h4>
+        <h4 class="mt-4">Ocupacion Actual: {{ocupacionActual}}</h4>
       </div>
     </div>
   </div>
