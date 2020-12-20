@@ -3,9 +3,7 @@ const Reserva = require('../models/reserva');
 const Establecimiento = require('../models/establecimiento');
 
 const qrcode = require('qrcode');
-
 const moment = require('moment');
-const { reset } = require('nodemon');
 moment.locale('es');
 
 exports.getIndex = function (req, res) {

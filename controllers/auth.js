@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 const User = require('../models/user');
 const crypto = require('crypto');
-const user = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
   res.render('login', {
